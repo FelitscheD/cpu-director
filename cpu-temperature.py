@@ -1,32 +1,14 @@
-import json
-import traceback
-import urllib
-from datetime import datetime
-import urllib.request
-
-# 1. First remove urllib2, python3 uses urllib uniformly
-# import urllib2
-
-# json data
-#formdata = {
-#    "temperature": ()
-#}
-#data = json.dumps(formdata)
-header = {"Content-Type": "application/json; charset=utf-8"}
-url = "https://api.powerbi.com/beta/0296808a-c473-4660-bee9-32f20745a5d1/datase$
-#data = json.dumps(formdata).encode()
-
-# 2. Modify the statement from urllib2 to urllib conversion
-while True:
- try:
-
   tempData = "/sys/class/thermal/thermal_zone0/temp"
   dateilesen = open(tempData, "r")
   temperature = dateilesen.readline(2)
   dateilesen.close()
   print(temperature)
+  now = datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S%Z")
+  timestamp = now
+  print(timestamp)
   formdata = {
-      "temperature": (temperature)
+      "temperature": (temperature),
+      "timestamp": (timestamp)
 }
   data = json.dumps(formdata)
   data = json.dumps(formdata).encode()
