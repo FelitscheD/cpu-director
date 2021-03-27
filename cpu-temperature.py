@@ -1,52 +1,43 @@
-
-"""
-Python sample for Raspberry Pi which reads temperature and humidity values from
-a DHT22 sensor, and sends that data to Power BI for use in a streaming dataset.
-"""
-
-import urllib, time
+import json
+import traceback
+import urllib
 from datetime import datetime
-import Adafruit_DHT as dht
+import urllib.request
 
-from datetime import datetime
-print (datetime.now())
+# 1. First remove urllib2, python3 uses urllib uniformly
+# import urllib2
 
-# type of sensor that we're using
-#SENSOR = dht.DHT22
+# json data
+formdata = {
+    "temperature":("")
+}
+data = json.dumps(formdata)
+header = {"Content-Type": "application/json; charset=utf-8"}
+url = 
+data = json.dumps(formdata).encode()
 
-# pin which reads the temperature and humidity from sensor
-#PIN = 4
-
-# REST API endpoint, given to you when you create an API streaming dataset
-# Will be of the format: https://api.powerbi.com/beta/<tenant id>/datasets/< dataset id>/rows?k$
-REST_API_URL = "++++API++++"
-
-# Gather temperature and sensor data and push to Power BI REST API
+# 2. Modify the statement from urllib2 to urllib conversion
 while True:
  try:
-        # read and print out humidity and temperature from sensor
-        #humidity,temp = dht.read_retry(SENSOR, PIN)
-        #print 'Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temp, humidity)
+
   tempData = "/sys/class/thermal/thermal_zone0/temp"
   dateilesen = open(tempData, "r")
-  temp = dateilesen.readline(2)
+  temperature = dateilesen.readline(2)
   dateilesen.close()
-  print(temp)
-                # ensure that timestamp string is formatted properly
-  now = datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S%Z")
+  print(temperature)
 
-                # data that we're sending to Power BI REST API
-  data = '[{{ "timestamp" : "{0}", "temperature": "{0}"}}]'.format(now, temp)
-
-                # make HTTP POST request to Power BI REST API
-  req = urllib2.Request(REST_API_URL, data)
-  response = urllib2.urlopen(req)
-  print("POST request to Power BI with data:{0}".format(data))
-  print("Response: HTTP {0} {1}\n".format(response.getcode(), response.read()))
-  time.sleep(1)
- except urllib2.HTTPError as e:
-          print("HTTP Error: {0} - {1}".format(e.code, e.reason))
- except urllib2.URLError as e:
-         print("URL Error: {0}".format(e.reason))
- except Exception as e:
-         print("General Exception: {0}".format(e))
+  request = urllib.request.Request(url, data, header)
+    # Output string
+  response = urllib.request.urlopen(request)
+  response_str = response.read()
+  response.close()
+  print(response_str)
+ except urllib.error.HTTPError as e:
+    print("The server couldn't fulfill the request")
+    print(e.code)
+    print(e.read())
+ except urllib.error.URLError as e:
+    print("Failed to reach the server")
+    print(e.reason)
+ except:
+    traceback.print_exc()
