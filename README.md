@@ -9,9 +9,11 @@ sudo nano /home/pi/cpu-director/cpu-temperature.py
 
 #Damit das Programm automatisch startet sollte das Programm in den systemweiten Crontabs hinterlegt werden.
 #Systemweite Crontabs öffnen
+
 sudo nano /etc/crontab
 
 #Folgender Befehl startet den cpu-director automatisch
+
 @reboot sudo python3 /home/pi/cpu-director/cpu-temperature.py
 
 #System neustarten
