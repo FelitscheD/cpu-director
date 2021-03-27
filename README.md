@@ -12,7 +12,7 @@ sudo nano /home/pi/cpu-director/cpu-temperature.py
 sudo nano /etc/crontab
 
 #Folgender Befehl startet den cpu-director automatisch
-@reboot sudo python3 /home/pi/cpu-director.py
+@reboot sudo python3 /home/pi/cpu-director/cpu-temperature.py
 
 #System neustarten
 
