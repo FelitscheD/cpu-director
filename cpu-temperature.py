@@ -8,9 +8,9 @@ import urllib.request
 # import urllib2
 
 # json data
-formdata = {
-    "temperature": ("Mist")
-}
+#formdata = {
+#    "temperature": ()
+#}
 #data = json.dumps(formdata)
 header = {"Content-Type": "application/json; charset=utf-8"}
 url = "https://api.powerbi.com/beta/0296808a-c473-4660-bee9-32f20745a5d1/datase$
@@ -25,6 +25,9 @@ while True:
   temperature = dateilesen.readline(2)
   dateilesen.close()
   print(temperature)
+  formdata = {
+      "temperature": (temperature)
+}
   data = json.dumps(formdata)
   data = json.dumps(formdata).encode()
 
